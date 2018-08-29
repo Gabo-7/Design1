@@ -4,6 +4,8 @@
 		_MainTex("Albedo (RGB)", 2D) = "white" {}
 		_FurLevelTex("Fur Level", 2D) = "white" {}
 		_Occlusion("Occlusion Map", 2D) = "white" {}
+		_BumpMap("Normal", 2D) = "bump" {}
+		_BumpScale("Normal Intensity", Range(-7,7)) = 1.0
 		_Glossiness("Smoothness", Range(0,1)) = 0.5
 		_Metallic("Metallic", Range(0,1)) = 0.0
 		_FurLength("Fur Length", Range(0.00002, 0.0021)) = .25
@@ -20,18 +22,19 @@
 		CGPROGRAM
 		// Physically based Standard lighting model, and enable shadows on all light types
 		#pragma surface surf Standard fullforwardshadows
-
+		//#pragma surface surf BlinnPhong alphatest:_Cutoff2
 		// Use shader model 3.0 target, to get nicer looking lighting
 		#pragma target 3.0
 
 		sampler2D _MainTex;
 		sampler2D _FurLevelTex;
 		sampler2D _Occlusion;
+		sampler2D _BumpMap;
 
 		struct Input {
 			float2 uv_MainTex;
 		};
-
+		float _BumpScale;
 		half _Glossiness;
 		half _Metallic;
 		fixed4 _Color;
@@ -48,8 +51,11 @@
 			fixed4 Occ = tex2D(_Occlusion, IN.uv_MainTex);
 			o.Albedo = c.rgb;
 			//o.Specular = Occ.rgb;
-			o.Metallic = _Metallic;
-			o.Smoothness = _Glossiness;
+			fixed3 normal = UnpackNormal(tex2D(_BumpMap, IN.uv_MainTex));
+			normal.z = normal.z / _BumpScale;
+			o.Normal = normalize(normal);
+			o.Metallic = _Metallic - Occ.rgb;
+			o.Smoothness = _Glossiness - Occ.rgb;
 			o.Alpha = d.a;
 			
 		}
