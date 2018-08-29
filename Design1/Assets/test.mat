@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: test
-  m_Shader: {fileID: 4800000, guid: 2423c1f1eea41c741afd237d04028325, type: 3}
+  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -81,9 +81,9 @@ Material:
     - _EmissionLevel: 0
     - _FurLength: 0.109
     - _GlossMapScale: 1
-    - _Glossiness: 0.698
+    - _Glossiness: 0.177
     - _GlossyReflections: 1
-    - _Metallic: 1
+    - _Metallic: 0.198
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
